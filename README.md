@@ -7,6 +7,9 @@
 # Ref: https://www.rust-lang.org/ja/tools/install
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
+# or update rustup
+rustup update
+
 # Rust fomatter
 which rustfmt
 # Rust linter
