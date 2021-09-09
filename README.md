@@ -18,7 +18,7 @@ which cargo-clippy
 rustup component add rustfmt clippy
 
 # Install Rust LSP Server
-rustup component add rls
+rustup component add rls rust-analysis rust-src
 
 # Install cargo-edit
 cargo install cargo-edit
