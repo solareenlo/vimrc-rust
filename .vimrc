@@ -44,8 +44,8 @@ call dein#add('rust-lang/rust.vim')
 call dein#end()
 
 " Required:
-filetype plugin indent on
 syntax enable
+filetype plugin indent on
 set number
 " let g:solarized_termcolors=256
 let g:solarized_termtrans=1
