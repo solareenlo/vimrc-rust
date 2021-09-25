@@ -289,3 +289,12 @@ nmap g/ <Plug>(easymotion-sn)
 " rust.vim
 "----------------------------------------------------------
 let g:rustfmt_autosave = 1
+
+
+"----------------------------------------------------------
+" Window
+"----------------------------------------------------------
+noremap <leader>h <C-w>h
+noremap <leader>l <C-w>l
+noremap <leader>j <C-w>j
+noremap <leader>k <C-w>k
