@@ -219,6 +219,7 @@ highlight link EchoDocFloat Pmenu
 let g:UltiSnipsUsePythonVersion    = 3
 let g:UltiSnipsEditSplit           = 'normal'
 let g:UltiSnipsSnippetDirectories  = ['~/.cache/dein/repos/github.com/honza/vim-snippets/UltiSnips']
+let g:UltiSnipsSnippetDirectories  = [$HOME.'/.vim/UltiSnips']
 let g:UltiSnipsEnableSnipMate      = 0
 let g:UltiSnipsExpandTrigger       = '<c-k>'
 let g:UltiSnipsJumpForwardTrigger  = '<c-f>'
@@ -289,6 +290,8 @@ nmap g/ <Plug>(easymotion-sn)
 " rust.vim
 "----------------------------------------------------------
 let g:rustfmt_autosave = 1
+let g:syntastic_rust_checkers = ['rustc']
+" let g:syntastic_rust_checkers = ['cargo']
 
 
 "----------------------------------------------------------
