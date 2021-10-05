@@ -1,5 +1,5 @@
 if &compatible
-  set nocompatible " Be iMproved
+	set nocompatible " Be iMproved
 endif
 
 " Required:
@@ -12,12 +12,15 @@ call dein#begin('~/.cache/dein')
 " Let dein manage dein
 call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
 if !has('nvim')
-  call dein#add('roxma/nvim-yarp')
-  call dein#add('roxma/vim-hug-neovim-rpc')
+	call dein#add('roxma/nvim-yarp')
+	call dein#add('roxma/vim-hug-neovim-rpc')
 endif
 
 " Add or remove your plugins here like this:
+call dein#add('xolox/vim-misc')
+call dein#add('xolox/vim-session')
 call dein#add('easymotion/vim-easymotion')
+call dein#add('tpope/vim-surround')
 call dein#add('vim-scripts/vim-auto-save')
 call dein#add('altercation/vim-colors-solarized')
 call dein#add('lifepillar/vim-solarized8')
@@ -30,22 +33,21 @@ call dein#add('dhruvasagar/vim-table-mode')
 call dein#add('scrooloose/nerdtree')
 call dein#add('osyo-manga/vim-anzu')
 call dein#add('autozimu/LanguageClient-neovim', {
-  \ 'rev': 'next',
-  \ 'build': 'bash install.sh',
-  \ })
-call dein#add('honza/vim-snippets')
-call dein#add('SirVer/ultisnips')
+			\ 'rev': 'next',
+			\ 'build': 'bash install.sh',
+			\ })
 call dein#add('Shougo/deoplete.nvim')
 call dein#add('Shougo/echodoc.vim')
+call dein#add('SirVer/ultisnips')
+call dein#add('honza/vim-snippets')
+call dein#add('tpope/vim-fugitive')
 call dein#add('airblade/vim-gitgutter')
-call dein#add('tpope/vim-surround')
-call dein#add('rust-lang/rust.vim')
 " Required:
 call dein#end()
 
 " Required:
-syntax enable
 filetype plugin indent on
+syntax enable
 set number
 " let g:solarized_termcolors=256
 let g:solarized_termtrans=1
@@ -76,15 +78,41 @@ set whichwrap=b,s,h,l,<,>,[,],~
 set clipboard+=unnamed,autoselect
 setlocal spell spelllang=en_us
 
+if exists('$SHELL')
+	set shell=$SHELL
+else
+	set shell=/bin/sh
+endif
+
+
+"-------------------------------------------------------------------------------
+" Include user's local vim config
+"-------------------------------------------------------------------------------
+if filereadable(expand("~/.vimrc_rust"))
+	source ~/.vimrc_rust
+endif
+
+" if filereadable(expand("~/.vimrc_go"))
+" 	source ~/.vimrc_go
+" endif
+
+" if filereadable(expand("~/.vimrc_cpp"))
+"	source ~/.vimrc_cpp
+" endif
+
+" if filereadable(expand("~/.vimrc_c"))
+" 	source ~/.vimrc_c
+" endif
+
 
 "-------------------------------------------------------------------------------
 " Restore the last cursor position.
 "-------------------------------------------------------------------------------
 if has("autocmd")
-    autocmd BufReadPost *
-    \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-    \   exe "normal! g'\"" |
-    \ endif
+	autocmd BufReadPost *
+	\ if line("'\"") > 0 && line ("'\"") <= line("$") |
+	\   exe "normal! g'\"" |
+	\ endif
 endif
 
 
@@ -100,20 +128,20 @@ let mapleader = ','
 set rtp+=/goinfre/$USER/.brew/opt/fzf
 nnoremap <Leader>f :FZF<CR>
 let $FZF_DEFAULT_OPTS = '--preview "bat --style=numbers --color=always --line-range :500 {}"'
-nnoremap <silent> <Leader>r :<C-u>silent call <SID>find_rip_grep()<CR>
 
+nnoremap <silent> <Leader>r :<C-u>silent call <SID>find_rip_grep()<CR>
 function! s:find_rip_grep() abort
-    call fzf#vim#grep(
-        \   'rg --ignore-file ~/.ignore --column --line-number --no-heading --hidden --smart-case .+',
-        \   1,
-        \   fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%', '?'),
-        \   0,
-        \ )
+	call fzf#vim#grep(
+	\   'rg --ignore-file ~/.ignore --column --line-number --no-heading --hidden --smart-case .+',
+	\   1,
+	\   fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%', '?'),
+	\   0,
+	\ )
 endfunction
 
 
 "-------------------------------------------------------------------------------
-" aut_save
+" auto_save
 "-------------------------------------------------------------------------------
 let g:auto_save = 1
 let g:auto_save_in_insert_mode = 0
@@ -123,18 +151,18 @@ let g:auto_save_in_insert_mode = 0
 " vim-table-mode
 "-------------------------------------------------------------------------------
 function! s:isAtStartOfLine(mapping)
-    let text_before_cursor = getline('.')[0 : col('.')-1]
-    let mapping_pattern = '\V' . escape(a:mapping, '\')
-    let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
-    return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
+	let text_before_cursor = getline('.')[0 : col('.')-1]
+	let mapping_pattern = '\V' . escape(a:mapping, '\')
+	let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
+	return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
 endfunction
 
 inoreabbrev <expr> <bar><bar>
-    \ <SID>isAtStartOfLine('\|\|') ?
-    \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
+	\ <SID>isAtStartOfLine('\|\|') ?
+	\ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
 inoreabbrev <expr> __
-    \ <SID>isAtStartOfLine('__') ?
-    \ '<c-o>:silent! TableModeDisable<cr>' : '__'
+	\ <SID>isAtStartOfLine('__') ?
+	\ '<c-o>:silent! TableModeDisable<cr>' : '__'
 
 let g:table_mode_corner = '|'
 
@@ -151,15 +179,15 @@ nnoremap <Leader>n :NERDTreeToggle<CR>
 " Show zenkaku spaces
 "-------------------------------------------------------------------------------
 function! ZenkakuSpace()
-        highlight ZenkakuSpace cterm=reverse ctermfg=DarkMagenta gui=reverse guifg=DarkMagenta
-    endfunction
+	highlight ZenkakuSpace cterm=reverse ctermfg=DarkMagenta gui=reverse guifg=DarkMagenta
+endfunction
 if has('syntax')
-    augroup ZenkakuSpace
-        autocmd!
-        autocmd ColorScheme       * call ZenkakuSpace()
-        autocmd VimEnter,WinEnter * match ZenkakuSpace /　/
-    augroup END
-    call ZenkakuSpace()
+	augroup ZenkakuSpace
+		autocmd!
+		autocmd ColorScheme       * call ZenkakuSpace()
+		autocmd VimEnter,WinEnter * match ZenkakuSpace /　/
+	augroup END
+	call ZenkakuSpace()
 endif
 
 
@@ -176,22 +204,8 @@ nmap <Esc><Esc> <Plug>(anzu-clear-search-status)
 " statusline
 set statusline=%{anzu#search_status()}
 if exists("g:loaded_webdevicons")
-    call webdevicons#refresh()
+	call webdevicons#refresh()
 endif
-
-
-"-------------------------------------------------------------------------------
-" LanguageClient-neovim: LSP client
-" rls: Rust LSP server
-"-------------------------------------------------------------------------------
-let g:LanguageClient_serverCommands = {
-	\ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-	\ }
-
-nmap <F5> <Plug>(lcn-menu)
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> gr :call LanguageClient#textDocument_rename()<CR>
 
 
 "-------------------------------------------------------------------------------
@@ -204,13 +218,13 @@ let g:deoplete#enable_at_startup = 1
 " echodoc
 "-------------------------------------------------------------------------------
 " Or, you could use neovim's floating text feature.
-set cmdheight=2
 let g:echodoc#enable_at_startup = 1
 let g:echodoc#type = 'echo'
 " let g:echodoc#type = 'popup'
 " To use a custom highlight for the float window,
 " change Pmenu to your highlight group
 highlight link EchoDocFloat Pmenu
+set cmdheight=2
 
 
 "----------------------------------------------------------
@@ -248,6 +262,8 @@ noremap <leader>x :bn<CR>
 noremap <leader>w :bn<CR>
 "" Close buffer
 noremap <leader>c :bd<CR>
+
+nnoremap <silent> <leader>b :Buffers<CR>
 
 
 "----------------------------------------------------------
@@ -287,17 +303,63 @@ nmap g/ <Plug>(easymotion-sn)
 
 
 "----------------------------------------------------------
-" rust.vim
-"----------------------------------------------------------
-let g:rustfmt_autosave = 1
-let g:syntastic_rust_checkers = ['rustc']
-" let g:syntastic_rust_checkers = ['cargo']
-
-
-"----------------------------------------------------------
 " Window
 "----------------------------------------------------------
-noremap <leader>h <C-w>h
-noremap <leader>l <C-w>l
-noremap <leader>j <C-w>j
-noremap <leader>k <C-w>k
+" Switching windows
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+noremap <C-h> <C-w>h
+
+" Split
+noremap <Leader>h :<C-u>split<CR>
+noremap <Leader>v :<C-u>vsplit<CR>
+
+
+"----------------------------------------------------------
+" session management
+"----------------------------------------------------------
+let g:session_directory = "~/.vim/session"
+let g:session_autoload = "no"
+let g:session_autosave = "no"
+let g:session_command_aliases = 1
+
+nnoremap <leader>so :OpenSession<Space>
+nnoremap <leader>ss :SaveSession<Space>
+nnoremap <leader>sd :DeleteSession<CR>
+nnoremap <leader>sc :CloseSession<CR>
+
+
+"----------------------------------------------------------
+" Mappings
+"----------------------------------------------------------
+" terminal emulation
+nnoremap <silent> <leader>t :terminal<CR>
+
+" History
+nmap <leader>y :History:<CR>
+
+" Tabs
+nnoremap <Tab> gt
+nnoremap <S-Tab> gT
+nnoremap <silent> <S-t> :tabnew<CR>
+
+" Clean search (highlight)
+nnoremap <silent> <leader><space> :noh<cr>
+
+" Set working directory
+nnoremap <leader>. :lcd %:p:h<CR>
+" Opens an edit command with the path of the currently edited file filled in
+noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+" Opens a tab edit command with the path of the currently edited file filled
+noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
+
+" Git
+noremap <Leader>ga :Gwrite<CR>
+noremap <Leader>gc :Git commit --verbose<CR>
+noremap <Leader>gsh :Gpush<CR>
+noremap <Leader>gll :Gpull<CR>
+noremap <Leader>gs :Gstatus<CR>
+noremap <Leader>gb :Gblame<CR>
+noremap <Leader>gd :Gvdiff<CR>
+noremap <Leader>gr :Gremove<CR>
