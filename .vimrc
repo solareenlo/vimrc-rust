@@ -104,6 +104,10 @@ endif
 " 	source ~/.vimrc_c
 " endif
 
+" if filereadable(expand("~/.vimrc_42"))
+" 	source ~/.vimrc_42
+" endif
+
 
 "-------------------------------------------------------------------------------
 " Restore the last cursor position.
