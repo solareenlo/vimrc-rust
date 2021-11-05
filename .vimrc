@@ -151,6 +151,7 @@ let mapleader = ','
 " fzf
 "-------------------------------------------------------------------------------
 set rtp+=/goinfre/$USER/.brew/opt/fzf
+set rtp+=$HOME/.brew/opt/fzf
 nnoremap <Leader>f :FZF<CR>
 let $FZF_DEFAULT_OPTS = '--preview "bat --style=numbers --color=always --line-range :500 {}"'
 
