@@ -389,3 +389,12 @@ noremap <Leader>gs :Gstatus<CR>
 noremap <Leader>gb :Gblame<CR>
 noremap <Leader>gd :Gvdiff<CR>
 noremap <Leader>gr :Gremove<CR>
+
+
+"----------------------------------------------------------
+" Markdown
+"----------------------------------------------------------
+augroup update_markdown_syntax
+  autocmd!
+  autocmd FileType markdown syntax match markdownError '\w\@<=\w\@='
+augroup END
