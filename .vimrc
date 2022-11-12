@@ -1,5 +1,5 @@
 if &compatible
-	set nocompatible " Be iMproved
+    set nocompatible " Be iMproved
 endif
 
 " Required:
@@ -12,8 +12,8 @@ call dein#begin('~/.cache/dein')
 " Let dein manage dein
 call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
 if !has('nvim')
-	call dein#add('roxma/nvim-yarp')
-	call dein#add('roxma/vim-hug-neovim-rpc')
+    call dein#add('roxma/nvim-yarp')
+    call dein#add('roxma/vim-hug-neovim-rpc')
 endif
 
 " Add or remove your plugins here like this:
@@ -33,9 +33,11 @@ call dein#add('dhruvasagar/vim-table-mode')
 call dein#add('scrooloose/nerdtree')
 call dein#add('osyo-manga/vim-anzu')
 call dein#add('autozimu/LanguageClient-neovim', {
-			\ 'rev': 'next',
-			\ 'build': 'bash install.sh',
-			\ })
+            \ 'rev': 'next',
+            \ 'build': 'bash install.sh',
+            \ })
+" call dein#add('Shougo/ddc.vim')
+" call dein#add('vim-denops/denops.vim')
 call dein#add('Shougo/deoplete.nvim')
 call dein#add('Shougo/echodoc.vim')
 call dein#add('SirVer/ultisnips')
@@ -81,9 +83,9 @@ set clipboard+=unnamed,autoselect
 setlocal spell spelllang=en_us
 
 if exists('$SHELL')
-	set shell=$SHELL
+    set shell=$SHELL
 else
-	set shell=/bin/sh
+    set shell=/bin/sh
 endif
 
 
@@ -106,27 +108,27 @@ colorscheme solarized8
 " Include user's local vim config
 "-------------------------------------------------------------------------------
 if filereadable(expand("~/.vimrc_rust"))
-	source ~/.vimrc_rust
+  source ~/.vimrc_rust
 endif
 
 " if filereadable(expand("~/.vimrc_go"))
-" 	source ~/.vimrc_go
+"     source ~/.vimrc_go
 " endif
 
-"if filereadable(expand("~/.vimrc_cpp"))
-"	source ~/.vimrc_cpp
-"endif
+" if filereadable(expand("~/.vimrc_cpp"))
+"     source ~/.vimrc_cpp
+" endif
 
 " if filereadable(expand("~/.vimrc_c"))
-" 	source ~/.vimrc_c
+"   source ~/.vimrc_c
 " endif
 
 " if filereadable(expand("~/.vimrc_42"))
-"	source ~/.vimrc_42
+"   source ~/.vimrc_42
 " endif
 
 " if filereadable(expand("~/.vimrc_python"))
-" 	source ~/.vimrc_python
+"   source ~/.vimrc_python
 " endif
 
 
@@ -134,10 +136,10 @@ endif
 " Restore the last cursor position.
 "-------------------------------------------------------------------------------
 if has("autocmd")
-	autocmd BufReadPost *
-		\ if line("'\"") > 0 && line ("'\"") <= line("$") |
-		\   exe "normal! g'\"" |
-		\ endif
+    autocmd BufReadPost *
+                \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+                \   exe "normal! g'\"" |
+                \ endif
 endif
 
 
@@ -157,12 +159,12 @@ let $FZF_DEFAULT_OPTS = '--preview "bat --style=numbers --color=always --line-ra
 
 nnoremap <silent> <Leader>r :<C-u>silent call <SID>find_rip_grep()<CR>
 function! s:find_rip_grep() abort
-	call fzf#vim#grep(
-		\   'rg --ignore-file ~/.ignore --column --line-number --no-heading --hidden --smart-case .+',
-		\   1,
-		\   fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%', '?'),
-		\   0,
-		\ )
+    call fzf#vim#grep(
+                \   'rg --ignore-file ~/.ignore --column --line-number --no-heading --hidden --smart-case .+',
+                \   1,
+                \   fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%', '?'),
+                \   0,
+                \ )
 endfunction
 
 
@@ -177,18 +179,18 @@ let g:auto_save_in_insert_mode = 0
 " vim-table-mode
 "-------------------------------------------------------------------------------
 function! s:isAtStartOfLine(mapping)
-	let text_before_cursor = getline('.')[0 : col('.')-1]
-	let mapping_pattern = '\V' . escape(a:mapping, '\')
-	let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
-	return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
+    let text_before_cursor = getline('.')[0 : col('.')-1]
+    let mapping_pattern = '\V' . escape(a:mapping, '\')
+    let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
+    return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
 endfunction
 
 inoreabbrev <expr> <bar><bar>
-		\ <SID>isAtStartOfLine('\|\|') ?
-		\ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
+            \ <SID>isAtStartOfLine('\|\|') ?
+            \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
 inoreabbrev <expr> __
-		\ <SID>isAtStartOfLine('__') ?
-		\ '<c-o>:silent! TableModeDisable<cr>' : '__'
+            \ <SID>isAtStartOfLine('__') ?
+            \ '<c-o>:silent! TableModeDisable<cr>' : '__'
 
 let g:table_mode_corner = '|'
 
@@ -205,15 +207,15 @@ nnoremap <Leader>n :NERDTreeToggle<CR>
 " Show zenkaku spaces
 "-------------------------------------------------------------------------------
 function! ZenkakuSpace()
-	highlight ZenkakuSpace cterm=reverse ctermfg=DarkMagenta gui=reverse guifg=DarkMagenta
+    highlight ZenkakuSpace cterm=reverse ctermfg=DarkMagenta gui=reverse guifg=DarkMagenta
 endfunction
 if has('syntax')
-	augroup ZenkakuSpace
-		autocmd!
-		autocmd ColorScheme       * call ZenkakuSpace()
-		autocmd VimEnter,WinEnter * match ZenkakuSpace /　/
-	augroup END
-	call ZenkakuSpace()
+    augroup ZenkakuSpace
+        autocmd!
+        autocmd ColorScheme       * call ZenkakuSpace()
+        autocmd VimEnter,WinEnter * match ZenkakuSpace /　/
+    augroup END
+    call ZenkakuSpace()
 endif
 
 
@@ -230,14 +232,22 @@ nmap <Esc><Esc> <Plug>(anzu-clear-search-status)
 " statusline
 set statusline=%{anzu#search_status()}
 if exists("g:loaded_webdevicons")
-	call webdevicons#refresh()
+    call webdevicons#refresh()
 endif
 
 
 "-------------------------------------------------------------------------------
 " deoplete
 "-------------------------------------------------------------------------------
+" let g:python3_host_prog='~/.brew/Cellar/python@3.10/3.10.6/bin/python3'
+" let g:python3_host_prog='~/.brew/Cellar/python@3.9/3.9.14/bin/python3'
+let g:python3_host_prog='~/.brew/bin/python3'
 let g:deoplete#enable_at_startup = 1
+
+
+"-------------------------------------------------------------------------------
+" ddc
+"-------------------------------------------------------------------------------
 
 
 "-------------------------------------------------------------------------------
